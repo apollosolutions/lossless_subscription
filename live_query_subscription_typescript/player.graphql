@@ -1,0 +1,40 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.4"
+    import: [
+      "@key"
+      "@extends"
+      "@shareable"
+      "@inaccessible"
+      "@override"
+      "@external"
+      "@provides"
+      "@requires"
+      "@tag"
+      "@composeDirective"
+      "@interfaceObject"
+    ]
+  )
+
+type Query {
+  players: [Player!]!
+}
+
+type Subscription {
+  """
+  Listen to the list of all new players, if you specify the last ID you received, it will replay events starting from that ID
+  """
+  newPlayers(fromPlayerId: ID): Player!
+}
+
+type Mutation {
+  """
+  Join a quiz with a username
+  """
+  createPlayer(userName: String!): Player
+}
+
+type Player @key(fields: "id") {
+  id: ID!
+  name: String!
+}
